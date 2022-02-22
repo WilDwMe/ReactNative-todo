@@ -4,7 +4,7 @@ import { Text, View, StyleSheet } from 'react-native';
 export const Todo = ({todo}) => {
     return (
         <View style={styles.todo}>
-        <Text>{todo.title}wer</Text>
+        <Text>{todo.title}</Text>
         </View>
     )
 }

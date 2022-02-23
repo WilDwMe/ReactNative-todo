@@ -1,15 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
+
 import { Navbar } from './src/components/Navbar';
 import { MainScreen } from './src/screens/MainScreen';
 import { TodoScreen } from './src/screens/TodoScreen';
 
+// Loading Async thinks before render App here bellow
+
+const loadApplication = async () => {
+  await Font.loadAsync({
+    'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
+    'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf'),
+    'roboto-thin': require('./assets/fonts/Roboto-Thin.ttf')
+  })
+}
+
+
 export default function App() {
-  const [todoId, setTodoId] = useState('2');
+
+  const [isReady, setIsReady] = useState(false);
+
+  const [todoId, setTodoId] = useState(null);
   const [todos, setTodos] = useState([
     { id: '1', title: 'Learn React Native' },
-    { id: '2', title: 'Deploy App to Play Market' },
   ]);
+
+// check loading state here bellow:
+
+  if (!isReady) {
+    return (
+      <AppLoading
+      startAsync={loadApplication}
+      onError={(err) => console.log(err)}
+      onFinish={() => setIsReady(true)}
+      />
+    )}
 
   const addTodo = (title) => {
     setTodos((prev) => [

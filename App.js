@@ -1,32 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, FlatList } from 'react-native';
-import { AddTodo } from './src/components/AddTodo';
+import { StyleSheet, View } from 'react-native';
 import { Navbar } from './src/components/Navbar';
-import { Todo } from './src/components/Todo';
+import { MainScreen } from './src/screens/MainScreen';
+import { TodoScreen } from './src/screens/TodoScreen';
 
 export default function App() {
+  const [todoId, setTodoId] = useState(null);
   const [todos, setTodos] = useState([
-    { id: 1, title: 'test1' },
-    { id: 2, title: 'test2' },
-    { id: 3, title: 'test3' },
-    { id: 4, title: 'test4' },
-    { id: 5, title: 'test5' },
-    { id: 6, title: 'test6' },
-    { id: 7, title: 'test7' },
-    { id: 8, title: 'test8' },
-    { id: 9, title: 'test9' },
-    { id: 10, title: 'test10' },
-    { id: 11, title: 'test11' },
-    { id: 12, title: 'test12' },
-    { id: 13, title: 'test13' },
-    { id: 14, title: 'test14' },
-    { id: 15, title: 'test15' },
+    { id: '1', title: 'Learn React Native' },
+    {id: '2', title: 'Deploy App to Play Market'}
   ]);
-
-  // useEffect(() => {
-  //   console.log(todos)
-  // })
 
   const addTodo = (title) => {
     setTodos(prev => [
@@ -37,19 +20,28 @@ export default function App() {
     ])
   }
 
+  const removeTodo = (id) => {
+    setTodos(prev => prev.filter((todo) => todo.id !== id))
+  }
+
+  let content = (
+    <MainScreen
+      todos={todos}
+      addTodo={addTodo}
+      removeTodo={removeTodo}
+      openTodo={setTodoId}/>
+  );
+
+  if (todoId) {
+    const selectedTodo = todos.find(todo => todo.id === todoId)
+    content = <TodoScreen goBack={() => setTodoId(null)} todo={selectedTodo}/>
+  }
+
   return (
     <View>
       <Navbar title='Todo App' />
       <View style={styles.container}>
-        <AddTodo onSubmit={addTodo} />
-        <FlatList
-          data={todos}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => <Todo todo={item} />}
-        />
-        {/* <View>
-          {todos.map((todo) => <Todo key={todo.id} todo={todo} /> )}
-        </View> */}
+      { content }
       </View>
     </View>
   )

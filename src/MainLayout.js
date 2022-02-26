@@ -11,26 +11,6 @@ import { THEME } from './theme';
 export const MainLayout = () => {
   const {todoId} = useContext(ScreenContext);
 
-  // const removeTodo = (id) => {
-  //   const todo = todos.find((item) => item.id === id);
-  //   Alert.alert('Delete task', `Are you sure you want to delete "${todo.title}" ?`, [
-  //     {
-  //       text: 'Cancel',
-  //       onPress: () => console.log('Cancel Pressed'),
-  //       style: 'cancel',
-  //     },
-  //     {
-  //       text: 'DELETE',
-  //       style: 'destructive',
-  //       cancelable: true,
-  //       onPress: () => {
-  //         setTodoId(null);
-  //         setTodos((prev) => prev.filter((todo) => todo.id !== id));
-  //       },
-  //     },
-  //   ]);
-  // };
-
   return (
     <View>
       <Navbar title="Todo App" />
